@@ -26,26 +26,66 @@ jQuery(document).ready(function ($) {
         // ],
         // pageLength: 10,
         // responsive: true,
+
+
+        // columns: [
+        //     { data: 'ID' }, // Always hidden
+        //     { data: 'user_data', orderable: false }, // Always visible
+        //     { data: 'role' }, // Visible above 992px
+        //     { data: 'post_count' }, // Visible above 992px
+        //     { data: 'action', orderable: false }, // Always visible
+        // ],
+        // responsive: {
+        //     breakpoints: [
+        //         { name: 'desktop', width: Infinity },
+        //         { name: 'tablet', width: 992 },
+        //         { name: 'mobile', width: 576 },
+        //     ],
+        //     details: false,
+        // },
+        // columnDefs: [
+        //     // Hide specific columns below 992px
+        //     { targets: [2, 3], visible: true, responsivePriority: 2 },
+        //     { targets: [2, 3], visible: false, responsive: { maxWidth: 991 } },
+        //     // { targets: [0], visible: false }, // ID is always hidden
+        // ],
+        // pageLength: 10,
+
         columns: [
-            { data: 'ID' }, // Always hidden
+            { data: 'ID' }, // Hidden on mobile, shown in details
             { data: 'user_data', orderable: false }, // Always visible
-            { data: 'role' }, // Visible above 992px
-            { data: 'post_count' }, // Visible above 992px
+            { data: 'role' }, // Hidden on mobile, shown in details
+            { data: 'post_count' }, // Hidden on mobile, shown in details
             { data: 'action', orderable: false }, // Always visible
         ],
         responsive: {
-            breakpoints: [
-                { name: 'desktop', width: Infinity },
-                { name: 'tablet', width: 992 },
-                { name: 'mobile', width: 576 },
-            ],
-            details: false,
+            details: {
+                renderer: function (api, rowIdx, columns) {
+                    var data = $.map(columns, function (col, i) {
+                        return col.hidden
+                            ? '<tr data-dt-row="' +
+                                  col.rowIndex +
+                                  '" data-dt-column="' +
+                                  col.columnIndex +
+                                  '">' +
+                                  '<td>' +
+                                  col.title +
+                                  ':' +
+                                  '</td> ' +
+                                  '<td>' +
+                                  col.data +
+                                  '</td>' +
+                                  '</tr>'
+                            : '';
+                    }).join('');
+
+                    return data ? $('<table/>').append(data) : false;
+                },
+            },
         },
         columnDefs: [
-            // Hide specific columns below 992px
-            { targets: [2, 3], visible: true, responsivePriority: 2 },
-            { targets: [2, 3], visible: false, responsive: { maxWidth: 991 } },
-            { targets: [0], visible: false }, // ID is always hidden
+            { targets: [0], visible: false }, // ID is always hidden by default
+            { className: 'control', targets: 1 }, // Add "+" button to "User Data" column
         ],
         pageLength: 10,
     });

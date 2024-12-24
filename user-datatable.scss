@@ -1,0 +1,30 @@
+table.responsive {
+  tr {
+    .dtr-control {
+      position: relative;
+      &::before {
+        top: 8px;
+        right: 4px;
+        height: 16px;
+        width: 16px;
+        display: block;
+        position: absolute;
+        color: white;
+        border: 2px solid white;
+        border-radius: 16px;
+        text-align: center;
+        line-height: 14px;
+        box-shadow: 0 0 3px #444;
+        box-sizing: content-box;
+        content: "+";
+        background-color: #31b131;
+      }
+    }
+    &.dt-hasChild {
+      .dtr-control::before {
+        content: "-";
+        background-color: #d33333;
+      }
+    }
+  }
+}

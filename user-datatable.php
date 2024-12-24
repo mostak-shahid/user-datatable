@@ -19,6 +19,7 @@ function udt_enqueue_scripts() {
 
         // wp_enqueue_style( 'udt-responsive-css', 'https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css', array(), '2.4.1' );
         wp_enqueue_script( 'udt-custom-js', plugin_dir_url( __FILE__ ) . 'user-datatable.js', array( 'jquery', 'udt-datatables-js' ), '1.0', true );
+        wp_enqueue_style( 'udt-custom-css', plugin_dir_url( __FILE__ ) . 'user-datatable.css', );
         wp_localize_script( 'udt-custom-js', 'udt_ajax_object', array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'nonce'    => wp_create_nonce( 'udt_ajax_nonce' ),
